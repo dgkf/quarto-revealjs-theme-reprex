@@ -1,0 +1,16 @@
+# ## Working Website
+#
+# format: custom-html
+#
+
+# ## Failing RevealJS
+#
+format: custom-revealjs
+#
+# ## ERROR: Theme file compilation failed:
+# ## 
+# ## Error: Can't find stylesheet to import.
+# ##    ╷
+# ## 46 │ @import "scss/variables";
+# ##    │         ^^^^^^^^^^^
+# ##    ╵

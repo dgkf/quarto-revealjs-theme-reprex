@@ -1,0 +1,6 @@
+index_files
+_site
+_quarto
+site_libs
+
+*.html

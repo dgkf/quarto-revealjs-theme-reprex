@@ -1,0 +1,9 @@
+title: Custom
+author: dgkf
+version: 0.0.1
+contributes:
+  format:
+    html:
+      theme: [default, theme.scss]
+    revealjs:
+      theme: [default, theme.scss]
