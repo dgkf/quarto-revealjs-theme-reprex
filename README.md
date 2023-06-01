@@ -10,7 +10,7 @@ set.
 Running `quarto preview` hits the error:
 
 ```
-❯ ~/.local/bin/quarto-bu preview ../quarto-revealjs-theme-reprex
+> quarto preview
 Preparing to preview
 [1/2] presentation.qmd
 [2/2] index.qmd
