@@ -4,6 +4,6 @@ version: 0.0.1
 contributes:
   format:
     html:
-      theme: [default, theme.scss]
+      theme: [default, scss/theme.scss]
     revealjs:
-      theme: [default, theme.scss]
+      theme: [default, scss/theme.scss]

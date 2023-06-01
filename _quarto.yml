@@ -1,16 +1,15 @@
-# ## Working Website
-#
-# format: custom-html
-#
+project:
+  type: website
+  preview:
+    port: 4321
 
-# ## Failing RevealJS
-#
-format: custom-revealjs
-#
-# ## ERROR: Theme file compilation failed:
-# ## 
-# ## Error: Can't find stylesheet to import.
-# ##    ╷
-# ## 46 │ @import "scss/variables";
-# ##    │         ^^^^^^^^^^^
-# ##    ╵
+website:
+  title: "Failing RevealJS SCSS Discovery"
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: Presentation
+        href: presentation.qmd
+
+format: custom-html
