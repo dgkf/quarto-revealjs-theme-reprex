@@ -1,50 +1,40 @@
-# `SCSS` errors when using revealjs within a webpage
+# Quarto RevealJS bug reprex
 
-Including a presentation within a webpage seems to hit regular SCSS issues. 
+Custom themes appear to not be populated using revealjs, and file discovery
+apperas quite flaky.
 
-What led me to create this minimal working example was an issue with another
-project failing to discover SCSS files. Reducing the problem further, this
-project fails due to undefined variables unrelated to the one variable that I
-set.
-
-Running `quarto preview` hits the error:
+For a while, I would get errors as SCSS fails to find `_variables.scss`, but
+only if a revealjs presentation was _nested_ inside of another file. 
 
 ```
-> quarto preview
-Preparing to preview
-[1/2] presentation.qmd
-[2/2] index.qmd
+> quarto preview presentation.qmd
+```
+
+Would build without error, while
+
+```
+> quarto preview examples/presentation.qmd
+
 ERROR: Theme file compilation failed:
 
-Error: $color: null is not a color.
-    ╷
-885 │   $red: _linear-channel-value(quarto-color.red($color));
-    │                               ^^^^^^^^^^^^^^^^^^^^^^^^
-    ╵
-  /var/folders/1d/zfy2f_ms289fy73937h1l0xr0000gp/T/quarto-sessiondb58edd1/d1565598/181bafef.scss 885:31  luminance()
-  /var/folders/1d/zfy2f_ms289fy73937h1l0xr0000gp/T/quarto-sessiondb58edd1/d1565598/181bafef.scss 895:13  contrast()
-  /var/folders/1d/zfy2f_ms289fy73937h1l0xr0000gp/T/quarto-sessiondb58edd1/d1565598/181bafef.scss 912:19  tone()
-  /var/folders/1d/zfy2f_ms289fy73937h1l0xr0000gp/T/quarto-sessiondb58edd1/d1565598/181bafef.scss 657:7   theme-contrast()
-
-Stack trace:
-
-Error: $color: null is not a color.
-    ╷
-885 │   $red: _linear-channel-value(quarto-color.red($color));
-    │                               ^^^^^^^^^^^^^^^^^^^^^^^^
-    ╵
-  /var/folders/1d/zfy2f_ms289fy73937h1l0xr0000gp/T/quarto-sessiondb58edd1/d1565598/181bafef.scss 885:31  luminance()
-  /var/folders/1d/zfy2f_ms289fy73937h1l0xr0000gp/T/quarto-sessiondb58edd1/d1565598/181bafef.scss 895:13  contrast()
-  /var/folders/1d/zfy2f_ms289fy73937h1l0xr0000gp/T/quarto-sessiondb58edd1/d1565598/181bafef.scss 912:19  tone()
-  /var/folders/1d/zfy2f_ms289fy73937h1l0xr0000gp/T/quarto-sessiondb58edd1/d1565598/181bafef.scss 657:7   theme-contrast()
-    at dartCommand (file:///Users/kelkhofd/Projects/quarto-cli/src/core/dart-sass.ts:102:11)
-    at eventLoopTick (ext:core/01_core.js:181:11)
-    at async dartCompile (file:///Users/kelkhofd/Projects/quarto-cli/src/core/dart-sass.ts:52:3)
-    at async compileWithCache (file:///Users/kelkhofd/Projects/quarto-cli/src/core/sass.ts:330:9)
-    at async compileSass (file:///Users/kelkhofd/Projects/quarto-cli/src/core/sass.ts:129:10)
-    at async resolveSassBundles (file:///Users/kelkhofd/Projects/quarto-cli/src/command/render/pandoc-html.ts:128:21)
-    at async resolveExtras (file:///Users/kelkhofd/Projects/quarto-cli/src/command/render/pandoc.ts:1208:14)
-    at async runPandoc (file:///Users/kelkhofd/Projects/quarto-cli/src/command/render/pandoc.ts:354:20)
-    at async renderPandoc (file:///Users/kelkhofd/Projects/quarto-cli/src/command/render/render.ts:197:24)
-    at async Object.onRender (file:///Users/kelkhofd/Projects/quarto-cli/src/command/render/render-files.ts:567:30)
+Error: Can't find stylesheet to import.
+   ╷
+46 │ @import "variables";
+   │         ^^^^^^^^^^^
+   ╵
 ```
+
+Would fail to import the appropriate themes.
+
+That issue seemed to disappear after running
+
+```
+rm -rf _site .quarto examples/presentation_files
+```
+
+Nevertheless, this difference seems to underpin a deeper issue that quarto might
+be ignoring the qmd file path when searching for theme files.
+
+After deleting those files, the whole project builds without error, which is
+equally disconcerting, given that the `_variables.scss` currently attempts to
+import a file that doesn't exist.

@@ -4,3 +4,5 @@ _quarto
 site_libs
 
 *.html
+
+/.quarto/

@@ -4,12 +4,15 @@ project:
     port: 4321
 
 website:
-  title: "Failing RevealJS SCSS Discovery"
+  title: "RevealJS Theme"
   navbar:
     left:
       - text: Home
         href: index.qmd
-      - text: Presentation
+      - text: Top Level Presentation
         href: presentation.qmd
+      - text: Nested Presentation
+        href: examples/presentation.qmd
 
 format: custom-html
+
